@@ -1,0 +1,16 @@
+@(book : Book)
+@import helper._
+@layout(book.title){
+    <div class="container" id="loneBook">
+        <h1>@book.title</h1>
+        <p>Price: $@book.price</p>
+        <p>Author: @book.author</p>
+
+        <a class="btn btn-primary" href="@routes.BooksController.edit(book.id)">Edit</a>
+
+        <button id="deleteButton" class="btn btn-danger" data-redirect ="@routes.HomeController.index()"
+                data-url="@routes.BooksController.destroy(book.id)">
+            Delete
+        </button>
+    </div>
+}

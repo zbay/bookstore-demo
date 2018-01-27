@@ -1,0 +1,10 @@
+@(bookForm: Form[Book], changeableID: Boolean)
+
+@if(changeableID){
+    @helper.inputText(bookForm("id"), 'class -> "form-control")
+} else{
+    @helper.inputText(bookForm("id"), 'class -> "form-control", 'readonly -> "readonly" )
+}
+@helper.inputText(bookForm("title"), 'class -> "form-control")
+@helper.inputText(bookForm("price"), 'class -> "form-control")
+@helper.inputText(bookForm("author"), 'class -> "form-control")

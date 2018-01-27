@@ -1,0 +1,12 @@
+@(bookForm : Form[Book])
+@import helper._
+@import views.html.Partial._bookFormFields
+@layout("Edit Book"){
+    <h1>Edit Book</h1>
+    @helper.form(action = routes.BooksController.update(), 'id->"bookUpdateForm"){
+        @_bookFormFields(bookForm, false)
+    }
+    <button id="updateButton" class="btn btn-success" data-redirect="@routes.BooksController.index()" type="submit">
+        Save Changes
+    </button>
+}
