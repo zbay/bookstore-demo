@@ -17,6 +17,7 @@ import models.Book;
 import views.html.Books.*;
 import play.data.*;
 import javax.inject.*;
+import play.libs.Json;
 
 public class BooksController extends Controller {
 
@@ -27,6 +28,11 @@ public class BooksController extends Controller {
     public Result index(){
         List<Book> books = Book.find.all();
         return ok(index.render(books));
+    }
+
+    public Result allBooks(){
+        List<Book> books = Book.find.all();
+        return ok(Json.toJson(books));
     }
 
     public Result create(){
