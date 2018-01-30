@@ -107,5 +107,13 @@ public class BooksController extends Controller {
         return ok(show.render(book));
     }
 
+    public Result oneBook(Integer id){
+        Book book = Book.find.byId(id);
+        if(book == null){
+            return notFound(views.html.Errors._404.render());
+        }
+        return ok(Json.toJson(book));
+    }
+
 
 }

@@ -1,3 +1,17 @@
-<p>
-  book works!
-</p>
+<mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <h2>
+          <a [routerLink]="[book.id]">
+            {{ book.title }}
+          </a>
+        </h2>
+      </mat-card-title>
+      <mat-card-subtitle>
+        <h3>{{ book.author }}</h3>
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>${{ book.price }}</p>
+    </mat-card-content>
+  </mat-card>

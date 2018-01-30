@@ -5,7 +5,7 @@ import 'hammerjs';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { MatTabsModule, MatInputModule, MatSnackBarModule, MatIconModule,
-   MatButtonModule, MatDialogModule, MatToolbarModule, MatTooltipModule } from '@angular/material';
+   MatButtonModule, MatDialogModule, MatToolbarModule, MatTooltipModule, MatCardModule } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -40,6 +40,7 @@ import { NavService } from './shared/services/nav.service';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    MatCardModule,
     MatTabsModule, MatIconModule,
     MatInputModule, MatSnackBarModule,
     MatButtonModule, MatDialogModule,

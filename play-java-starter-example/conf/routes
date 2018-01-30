@@ -16,6 +16,7 @@ GET /api/books                      controllers.BooksController.allBooks
 GET /books/create                   controllers.BooksController.create
 + nocsrf
 GET /books/:id                      controllers.BooksController.show(id: Integer)
+GET /api/books/:id                  controllers.BooksController.oneBook(id: Integer)
 + nocsrf
 GET /books/edit/:id                 controllers.BooksController.edit(id: Integer)
 + nocsrf

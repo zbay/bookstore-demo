@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { Book } from '../shared/models/Book';
 import { BookService } from '../shared/services/book.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 //import { redirectToList } from '../shared/functions/RedirectToList';
 
 @Component({
@@ -17,28 +17,43 @@ export class SingleBookComponent implements OnInit, OnDestroy {
   private errorMessage: string;
   private bookSubscription: Subscription;
   private idSubscription: Subscription;
+  private deleteSubscription: Subscription;
 
-  constructor(private bookService: BookService, private route: ActivatedRoute) {
+  constructor(private bookService: BookService, private router: Router, private route: ActivatedRoute) {
     this.idSubscription = this.route.paramMap.subscribe(params => {
       this.bookID = parseInt(params.get('id'));
     });
    }
 
   ngOnInit() {
+    let componentScope = this;
     this.bookSubscription = this.bookService.getBook(this.bookID)
       .subscribe(
         function setBook(retrievedBook){
-          this.book = retrievedBook;
+          componentScope.book = retrievedBook;
         }, 
         function handleError(err){
-          this.errorMessage = `No book with id #${this.bookID} could be retrieved!`
+          componentScope.errorMessage = `No book with id #${this.bookID} could be retrieved!`
         }
       );
+  }
+
+  deleteBook(){
+    this.deleteSubscription = this.bookService.deleteBook(this.bookID)
+      .subscribe(function successfulDelete(){
+        this.router.navigate(["/books"]);
+      },
+    function showError(){
+      this.errorMessage = "Could not delete this book!";
+    });
   }
 
   ngOnDestroy(){
     this.bookSubscription.unsubscribe();
     this.idSubscription.unsubscribe();
+    if(this.deleteSubscription){
+      this.deleteSubscription.unsubscribe();
+    }
   }
 
 }

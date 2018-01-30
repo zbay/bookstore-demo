@@ -5,9 +5,9 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './edit-book.component.html',
   styleUrls: ['./edit-book.component.css']
 })
-export class EditBookComponent implements OnInit {
+export class EditBookComponent implements OnInit, OnDestroy {
 
-  constructor() { }
+  constructor(private bookService: BookService) { }
 
   ngOnInit() {
   }
