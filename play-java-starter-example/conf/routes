@@ -24,7 +24,7 @@ DELETE /books/delete/:id            controllers.BooksController.destroy(id: Inte
 DELETE /api/books/:id               controllers.BooksController.deleteBook(id: Integer)
 + nocsrf
 PUT /books/edit                     controllers.BooksController.update
-PUT /api/books/edit                 controllers.BooksController.updateBook
+PUT /api/books/:id                  controllers.BooksController.updateBook(id: Integer)
 + nocsrf
 POST /books/create                  controllers.BooksController.save
 

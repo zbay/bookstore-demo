@@ -29,6 +29,7 @@ export class BookService {
   }
 
   editBook(book: Book): Observable<any>{
+    console.log(book);
     return this.http.put(`${this.prefix}/api/books/${book.id}`, book);
   }
 

@@ -15,11 +15,7 @@
       <p>${{ book.price }}</p>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button color="primary">
-        <a [routerLink]="['edit']">
-          Edit
-        </a>
-      </button>
+      <button mat-raised-button color="primary" (click)="goEdit()">Edit</button>
       <button mat-raised-button color="warn" (click)="deleteBook()">Delete</button>
     </mat-card-actions>
   </mat-card>

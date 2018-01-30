@@ -39,6 +39,7 @@ import { NavService } from './shared/services/nav.service';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,

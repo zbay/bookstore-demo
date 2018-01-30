@@ -50,6 +50,10 @@ export class SingleBookComponent implements OnInit, OnDestroy {
     });
   }
 
+  goEdit(){
+    this.router.navigate([`/books/${this.bookID}/edit`]);
+  }
+
   ngOnDestroy(){
     this.bookSubscription.unsubscribe();
     this.idSubscription.unsubscribe();

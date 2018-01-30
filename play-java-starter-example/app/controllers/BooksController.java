@@ -18,6 +18,7 @@ import views.html.Books.*;
 import play.data.*;
 import javax.inject.*;
 import play.libs.Json;
+import com.fasterxml.jackson.databind.JsonNode;
 
 public class BooksController extends Controller {
 
@@ -87,21 +88,24 @@ public class BooksController extends Controller {
         return ok();
     }
 
-    public Result updateBook(){
-        Form<Book> bookForm = formFactory.form(Book.class).bindFromRequest();
-        if(bookForm.hasErrors()){
-            return badRequest();
-        }
-        Book book = bookForm.get();
-        Book oldBook = Book.find.byId(book.id);
+    public Result updateBook(Integer id){
+        JsonNode book = request().body().asJson();
+        System.out.println(book.findPath("title").textValue());
+        System.out.println(book.findPath("author").textValue());
+        System.out.println(book.findPath("price").textValue());
+        Book oldBook = Book.find.byId(id);
         if(oldBook == null) {
             return notFound();
         }
 
-        oldBook.setTitle(book.title);
-        oldBook.setAuthor(book.author);
-        oldBook.setPrice(book.price);
+        oldBook.setTitle(book.findPath("title").textValue());
+        oldBook.setAuthor(book.findPath("author").textValue());
+        oldBook.setPrice(Integer.parseInt(book.findPath("price").textValue()));
         oldBook.save();
+
+        System.out.println(oldBook.getTitle());
+        System.out.println(oldBook.getAuthor());
+        System.out.println(oldBook.getPrice());
 
         return ok();
     }
