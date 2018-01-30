@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card *ngIf="book">
     <mat-card-header>
       <mat-card-title>
         <h2>
@@ -20,6 +20,6 @@
           Edit
         </a>
       </button>
-      <button mat-raised-button color="warn">Delete</button>
+      <button mat-raised-button color="warn" (click)="deleteBook()">Delete</button>
     </mat-card-actions>
   </mat-card>

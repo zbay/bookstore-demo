@@ -21,8 +21,10 @@ GET /api/books/:id                  controllers.BooksController.oneBook(id: Inte
 GET /books/edit/:id                 controllers.BooksController.edit(id: Integer)
 + nocsrf
 DELETE /books/delete/:id            controllers.BooksController.destroy(id: Integer)
+DELETE /api/books/:id               controllers.BooksController.deleteBook(id: Integer)
 + nocsrf
-PUT /books/edit                    controllers.BooksController.update
+PUT /books/edit                     controllers.BooksController.update
+PUT /api/books/edit                 controllers.BooksController.updateBook
 + nocsrf
 POST /books/create                  controllers.BooksController.save
 

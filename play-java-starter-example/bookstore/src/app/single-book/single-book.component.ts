@@ -33,18 +33,20 @@ export class SingleBookComponent implements OnInit, OnDestroy {
           componentScope.book = retrievedBook;
         }, 
         function handleError(err){
-          componentScope.errorMessage = `No book with id #${this.bookID} could be retrieved!`
+          componentScope.errorMessage = `No book with id #${this.bookID} could be retrieved!`;
+          componentScope.router.navigate(["/books"]);
         }
       );
   }
 
   deleteBook(){
+    let componentScope = this;
     this.deleteSubscription = this.bookService.deleteBook(this.bookID)
       .subscribe(function successfulDelete(){
-        this.router.navigate(["/books"]);
+        componentScope.router.navigate(["/books"]);
       },
-    function showError(){
-      this.errorMessage = "Could not delete this book!";
+    function showError(err){
+      componentScope.errorMessage = "Could not delete this book!";
     });
   }
 

@@ -70,7 +70,7 @@ public class BooksController extends Controller {
         Book book = bookForm.get();
         Book oldBook = Book.find.byId(book.id);
         if(oldBook == null){
-            flash("danger", "Boom not found!");
+            flash("danger", "Book not found!");
             return notFound(views.html.Errors._404.render());
         }
 
@@ -87,6 +87,25 @@ public class BooksController extends Controller {
         return ok();
     }
 
+    public Result updateBook(){
+        Form<Book> bookForm = formFactory.form(Book.class).bindFromRequest();
+        if(bookForm.hasErrors()){
+            return badRequest();
+        }
+        Book book = bookForm.get();
+        Book oldBook = Book.find.byId(book.id);
+        if(oldBook == null) {
+            return notFound();
+        }
+
+        oldBook.setTitle(book.title);
+        oldBook.setAuthor(book.author);
+        oldBook.setPrice(book.price);
+        oldBook.save();
+
+        return ok();
+    }
+
     public Result destroy(Integer id){
         Book book = Book.find.byId(id);
         if(book == null){
@@ -95,6 +114,16 @@ public class BooksController extends Controller {
         }
         book.delete();
         flash("success", "Book deleted!");
+        return ok();
+        //return redirect(routes.BooksController.index());
+    }
+
+    public Result deleteBook(Integer id){
+        Book book = Book.find.byId(id);
+        if(book == null){
+            return notFound();
+        }
+        book.delete();
         return ok();
         //return redirect(routes.BooksController.index());
     }
