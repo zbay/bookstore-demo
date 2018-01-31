@@ -45,33 +45,36 @@ export class BookFormComponent implements OnInit, OnDestroy {
   }
 
   saveChanges(){
-    let componentScope = this;
-    this.saveSubscription = this.bookService.editBook(this.book)
-      .subscribe(function successfulEdit(){
-        componentScope.router.navigate(["/books"]);
-      },
-    function editError(err){
-      componentScope.errorMessage = "Could not save changes to this id!";
-    });
+    this.bookService.editBook(this.book, this.navigateToBook.bind(this), this.editError.bind(this));
   }
 
   createBook(){
     let componentScope = this;
-    this.saveSubscription = this.bookService.createBook(this.book)
-      .subscribe(function successfulCreate(){
-        componentScope.router.navigate(["/books"]);
-      },
-    function createError(err){
-      componentScope.errorMessage = "Could not create this book! Try changing the id.";
-    });
+    this.bookService.createBook(this.book,
+       this.navigateHome.bind(this), this.creationError());
+  }
+
+  navigateHome(){
+    this.router.navigate(["/books"]);
+  }
+
+  navigateToBook(){
+    if(this.editingForm){
+      this.router.navigate([`/books/${this.bookID}`]);
+    }
+  }
+
+  creationError(){
+    this.errorMessage = "Could not create this book! Try changing the id.";
+  }
+
+  editError(){
+    this.errorMessage = "Could not save changes! Did you fill out all of the fields in a valid way?";
   }
 
   ngOnDestroy(){
     if(this.bookSubscription){
       this.bookSubscription.unsubscribe();
-    }
-    if(this.saveSubscription){
-      this.saveSubscription.unsubscribe();
     }
   }
 

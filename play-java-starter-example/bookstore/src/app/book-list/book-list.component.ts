@@ -21,11 +21,11 @@ export class BookListComponent implements OnInit {
     this.bookService.getBooks(this.setBooks.bind(this), this.setError.bind(this));
   }
 
-  setBooks(retrievedBooks){
+  setBooks(retrievedBooks): void{
       this.books = retrievedBooks;
   }
 
-  setError(err){
+  setError(err): void{
     this.errorMessage = err;
   }
 

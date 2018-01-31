@@ -12,8 +12,7 @@ export class BookService {
 
   constructor(private http: HttpClient) { }
 
-  //getBooks(): Observable<Book[]>{
-  getBooks(successCallback, failCallback){
+  getBooks(successCallback, failCallback): Promise<void>{
     return this.http.get(`${this.prefix}/api/books`)
       .toPromise()
       .then((books) => {
@@ -24,8 +23,15 @@ export class BookService {
       });
   }
 
-  createBook(book: Book): Observable<any>{
-    return this.http.post(`${this.prefix}/api/books`, book);
+  createBook(book: Book, successCallback, failCallback): Promise<void>{
+    return this.http.post(`${this.prefix}/api/books`, book)
+      .toPromise()
+      .then(() => {
+        successCallback();
+      })
+      .catch(() => {
+        failCallback();
+      });
   }
 
   getBook(id: number): Observable<any>{
@@ -36,9 +42,15 @@ export class BookService {
     return this.http.delete(`${this.prefix}/api/books/${id}`);
   }
 
-  editBook(book: Book): Observable<any>{
-    console.log(book);
-    return this.http.put(`${this.prefix}/api/books/${book.id}`, book);
+  editBook(book: Book, successCallback, failCallback): Promise<void>{
+    return this.http.put(`${this.prefix}/api/books/${book.id}`, book)
+      .toPromise()
+      .then(() => {
+        successCallback();
+      })
+      .catch(() => {
+        failCallback();
+      });
   }
 
   /*getBooks(successCallback, failCallback){
