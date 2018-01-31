@@ -16,7 +16,6 @@ export class SingleBookComponent implements OnInit, OnDestroy {
   private bookID: number;
   private errorMessage: string;
   private idSubscription: Subscription;
-  private deleteSubscription: Subscription;
 
   constructor(private bookService: BookService, private router: Router, private route: ActivatedRoute) {
     this.idSubscription = this.route.paramMap.subscribe(params => {
@@ -38,15 +37,17 @@ export class SingleBookComponent implements OnInit, OnDestroy {
   }
 
   deleteBook(){
-    let componentScope = this;
-    this.deleteSubscription = this.bookService.deleteBook(this.bookID)
-      .subscribe(function successfulDelete(){
-        componentScope.router.navigate(["/books"]);
-      },
-    function showError(err){
-      componentScope.errorMessage = "Could not delete this book!";
-    });
+    this.bookService.deleteBook(this.bookID, this.navigateHome.bind(this), this.handleDeleteError.bind(this));
   }
+
+  navigateHome(){
+    this.router.navigate(["/books"]);
+  }
+
+  handleDeleteError(){
+    this.errorMessage = "Could not delete this book!";
+  }
+
 
   goEdit(){
     this.router.navigate([`/books/${this.bookID}/edit`]);
@@ -54,9 +55,6 @@ export class SingleBookComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(){
     this.idSubscription.unsubscribe();
-    if(this.deleteSubscription){
-      this.deleteSubscription.unsubscribe();
-    }
   }
 
 }

@@ -45,8 +45,15 @@ export class BookService {
       });
   }
 
-  deleteBook(id: number): Observable<any>{
-    return this.http.delete(`${this.prefix}/api/books/${id}`);
+  deleteBook(id: number, successCallback, failCallback): Promise<void>{
+    return this.http.delete(`${this.prefix}/api/books/${id}`)
+      .toPromise()
+      .then(() => {
+        successCallback();
+      })
+      .catch(() => {
+        failCallback();
+      });
   }
 
   editBook(book: Book, successCallback, failCallback): Promise<void>{
