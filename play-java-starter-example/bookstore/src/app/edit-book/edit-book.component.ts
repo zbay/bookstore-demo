@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Book } from '../shared/models/Book';
 import { Subscription } from 'rxjs/Subscription';
 import { BookService } from '../shared/services/book.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-edit-book',
@@ -11,21 +11,17 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class EditBookComponent implements OnInit, OnDestroy {
 
-  private book: Book;
   private bookID: number;
-  private errorMessage: string;
-  private bookSubscription: Subscription;
   private idSubscription: Subscription;
-  private saveSubscription: Subscription;
 
-  constructor(private bookService: BookService, private route: ActivatedRoute, private router: Router) { 
+  constructor(private bookService: BookService, private route: ActivatedRoute) { 
     this.idSubscription = this.route.paramMap.subscribe(params => {
       this.bookID = parseInt(params.get('id'));
     });
   }
 
   ngOnInit() {
-    let componentScope = this;
+    /*let componentScope = this;
     this.bookSubscription = this.bookService.getBook(this.bookID)
       .subscribe(
         function setBook(retrievedBook){
@@ -35,10 +31,10 @@ export class EditBookComponent implements OnInit, OnDestroy {
           componentScope.errorMessage = `No book with id #${this.bookID} could be retrieved!`;
           componentScope.router.navigate(["/books"]);
         }
-      );
+      );*/
   }
 
-  saveChanges(){
+  /*saveChanges(){
     let componentScope = this;
     console.log(this.book);
     this.bookService.editBook(this.book)
@@ -48,14 +44,10 @@ export class EditBookComponent implements OnInit, OnDestroy {
     function editError(err){
       componentScope.errorMessage = "Could not save changes to this id!";
     });
-  }
+  }*/
 
   ngOnDestroy(){
-    this.bookSubscription.unsubscribe();
     this.idSubscription.unsubscribe();
-    if(this.saveSubscription){
-      this.saveSubscription.unsubscribe();
-    }
   }
 
 }

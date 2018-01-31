@@ -1,18 +1,4 @@
 <div>
   <h1>Editing</h1>
-  <form #form="ngForm" (submit)="saveChanges()" *ngIf="book">
-    <mat-form-field>
-      <input matInput type="text" placeholder="ID #" [(ngModel)]="book.id" name="id" disabled/>
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput type="text" placeholder="Title" [(ngModel)]="book.title" name="title"/>
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput type="text" placeholder="Author" [(ngModel)]="book.author" name="author"/>
-    </mat-form-field>    
-    <mat-form-field>
-      <input matInput type="text" placeholder="Price ($)" [(ngModel)]="book.price" name="price"/>
-    </mat-form-field>
-    <button type="submit" mat-raised-button color="primary">Save Changes</button>
-  </form>
+  <app-book-form [bookID]="this.bookID" [editingForm]="true"></app-book-form>
 </div>

@@ -1,3 +1,16 @@
-<p>
-  book-form works!
-</p>
+<form #form="ngForm" (submit)="saveBook()" *ngIf="book">
+    <mat-form-field>
+      <input *ngIf="editingForm" matInput type="text" placeholder="ID #" [(ngModel)]="book.id" name="id" disabled/>
+      <input *ngIf="!editingForm" matInput type="text" placeholder="ID #" [(ngModel)]="book.id" name="id"/>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="text" placeholder="Title" [(ngModel)]="book.title" name="title"/>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="text" placeholder="Author" [(ngModel)]="book.author" name="author"/>
+    </mat-form-field>    
+    <mat-form-field>
+      <input matInput type="text" placeholder="Price ($)" [(ngModel)]="book.price" name="price"/>
+    </mat-form-field>
+    <button type="submit" mat-raised-button color="primary">Save Changes</button>
+  </form>

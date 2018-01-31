@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BookService} from '../shared/services/book.service';
 import { Book } from '../shared/models/Book';
 import { Subscription } from 'rxjs/Subscription';
@@ -15,7 +15,7 @@ export class BookListComponent implements OnInit, OnDestroy {
   private errorMessage: string;
   private bookSubscription: Subscription;
 
-  constructor(private bookService: BookService, private ref: ChangeDetectorRef) { }
+  constructor(private bookService: BookService) { }
 
   ngOnInit() {
     let componentScope = this;
