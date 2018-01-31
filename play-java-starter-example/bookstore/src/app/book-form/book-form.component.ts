@@ -14,7 +14,7 @@ export class BookFormComponent implements OnInit, OnDestroy {
   @Input() bookID: number;
   private errorMessage: string;
   private bookSubscription: Subscription;
-  private createSubscription: Subscription;
+  private saveSubscription: Subscription;
   private book: Book = new Book();
 
   constructor(private bookService: BookService, private router: Router) { }
@@ -46,7 +46,7 @@ export class BookFormComponent implements OnInit, OnDestroy {
 
   saveChanges(){
     let componentScope = this;
-    this.bookService.editBook(this.book)
+    this.saveSubscription = this.bookService.editBook(this.book)
       .subscribe(function successfulEdit(){
         componentScope.router.navigate(["/books"]);
       },
@@ -57,7 +57,7 @@ export class BookFormComponent implements OnInit, OnDestroy {
 
   createBook(){
     let componentScope = this;
-    this.bookService.createBook(this.book)
+    this.saveSubscription = this.bookService.createBook(this.book)
       .subscribe(function successfulCreate(){
         componentScope.router.navigate(["/books"]);
       },
@@ -70,8 +70,8 @@ export class BookFormComponent implements OnInit, OnDestroy {
     if(this.bookSubscription){
       this.bookSubscription.unsubscribe();
     }
-    if(this.createSubscription){
-      this.createSubscription.unsubscribe();
+    if(this.saveSubscription){
+      this.saveSubscription.unsubscribe();
     }
   }
 

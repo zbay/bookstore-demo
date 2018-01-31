@@ -53,6 +53,21 @@ public class BooksController extends Controller {
         return redirect(routes.BooksController.index());
     }
 
+    public Result createBook(){
+        JsonNode bookObj = request().body().asJson();
+        Book existingBook = Book.find.byId(bookObj.findPath("id").intValue());
+        if(existingBook != null){
+            return internalServerError();
+        }
+        Book newBook = new Book();
+        newBook.setId(Integer.parseInt(bookObj.findPath("id").textValue()));
+        newBook.setTitle(bookObj.findPath("title").textValue());
+        newBook.setAuthor(bookObj.findPath("author").textValue());
+        newBook.setPrice(Integer.parseInt(bookObj.findPath("price").textValue()));
+        newBook.save();
+        return ok();
+    }
+
     public Result edit(Integer id){
         Book book = Book.find.byId(id);
         if(book == null){
@@ -90,9 +105,6 @@ public class BooksController extends Controller {
 
     public Result updateBook(Integer id){
         JsonNode book = request().body().asJson();
-        System.out.println(book.findPath("title").textValue());
-        System.out.println(book.findPath("author").textValue());
-        System.out.println(book.findPath("price").textValue());
         Book oldBook = Book.find.byId(id);
         if(oldBook == null) {
             return notFound();
@@ -102,10 +114,6 @@ public class BooksController extends Controller {
         oldBook.setAuthor(book.findPath("author").textValue());
         oldBook.setPrice(Integer.parseInt(book.findPath("price").textValue()));
         oldBook.save();
-
-        System.out.println(oldBook.getTitle());
-        System.out.println(oldBook.getAuthor());
-        System.out.println(oldBook.getPrice());
 
         return ok();
     }

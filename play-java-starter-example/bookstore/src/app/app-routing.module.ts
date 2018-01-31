@@ -10,7 +10,7 @@ import { SingleBookComponent } from './single-book/single-book.component';
 const routes: Routes = [{path: '', pathMatch: 'full', component: HomeComponent},
 {path: 'books', pathMatch: 'full', component: BookListComponent},
 {path: 'books/:id', pathMatch: 'full', component: SingleBookComponent},
-{path: 'books/create', pathMatch: 'full', component: NewBookComponent},
+{path: 'newBook', pathMatch: 'full', component: NewBookComponent},
 {path: 'books/:id/edit', pathMatch: 'full', component: EditBookComponent}];
 
 @NgModule({
