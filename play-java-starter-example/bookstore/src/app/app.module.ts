@@ -22,7 +22,6 @@ import { EditBookComponent } from './edit-book/edit-book.component';
 import { BookComponent } from './book/book.component';
 import { BookService } from './shared/services/book.service';
 import { SingleBookComponent } from './single-book/single-book.component';
-import { NavService } from './shared/services/nav.service';
 
 
 @NgModule({
@@ -49,7 +48,7 @@ import { NavService } from './shared/services/nav.service';
     MatButtonModule, MatDialogModule,
     MatToolbarModule, MatTooltipModule
   ],
-  providers: [BookService, NavService],
+  providers: [BookService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

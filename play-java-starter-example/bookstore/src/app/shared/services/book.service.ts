@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/toPromise';
+import 'rxjs/add/operator/map';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Book } from '../models/Book';
 
@@ -12,8 +13,15 @@ export class BookService {
   constructor(private http: HttpClient) { }
 
   //getBooks(): Observable<Book[]>{
-  getBooks(): Observable<any>{
-    return this.http.get(`${this.prefix}/api/books`);
+  getBooks(successCallback, failCallback){
+    return this.http.get(`${this.prefix}/api/books`)
+      .toPromise()
+      .then((books) => {
+        successCallback(books);
+      })
+      .catch((err) => {
+        failCallback(err);
+      });
   }
 
   createBook(book: Book): Observable<any>{

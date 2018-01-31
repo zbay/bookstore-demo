@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BookService} from '../shared/services/book.service';
 import { Book } from '../shared/models/Book';
 import { Subscription } from 'rxjs/Subscription';
@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs/Subscription';
   templateUrl: './book-list.component.html',
   styleUrls: ['./book-list.component.css']
 })
-export class BookListComponent implements OnInit, OnDestroy {
+export class BookListComponent implements OnInit {
 
   private books: Book[] = [];
   private errorMessage: string;
@@ -18,18 +18,15 @@ export class BookListComponent implements OnInit, OnDestroy {
   constructor(private bookService: BookService) { }
 
   ngOnInit() {
-    let componentScope = this;
-    this.bookSubscription = this.bookService.getBooks()
-      .subscribe(function setBooks(retrievedBooks){
-        componentScope.books = retrievedBooks;
-      }, 
-      function setError(msg){
-        this.errorMessage = msg;
-      });
+    this.bookService.getBooks(this.setBooks.bind(this), this.setError.bind(this));
   }
 
-  ngOnDestroy(){
-    this.bookSubscription.unsubscribe();
+  setBooks(retrievedBooks){
+      this.books = retrievedBooks;
+  }
+
+  setError(err){
+    this.errorMessage = err;
   }
 
 }

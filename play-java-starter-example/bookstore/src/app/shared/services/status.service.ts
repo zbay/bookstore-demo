@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 @Injectable()
-export class NavService {
+export class StatusService {
 
   constructor() { }
 
