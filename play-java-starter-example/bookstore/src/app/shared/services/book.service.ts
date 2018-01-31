@@ -34,8 +34,15 @@ export class BookService {
       });
   }
 
-  getBook(id: number): Observable<any>{
-    return this.http.get(`${this.prefix}/api/books/${id}`);
+  getBook(id: number, successCallback, failCallback): Promise<void>{
+    return this.http.get(`${this.prefix}/api/books/${id}`)
+      .toPromise()
+      .then((book) => {
+        successCallback(book);
+      })
+      .catch(() => {
+        failCallback();
+      });
   }
 
   deleteBook(id: number): Observable<any>{

@@ -15,7 +15,6 @@ export class SingleBookComponent implements OnInit, OnDestroy {
   private book: Book;
   private bookID: number;
   private errorMessage: string;
-  private bookSubscription: Subscription;
   private idSubscription: Subscription;
   private deleteSubscription: Subscription;
 
@@ -26,17 +25,16 @@ export class SingleBookComponent implements OnInit, OnDestroy {
    }
 
   ngOnInit() {
-    let componentScope = this;
-    this.bookSubscription = this.bookService.getBook(this.bookID)
-      .subscribe(
-        function setBook(retrievedBook){
-          componentScope.book = retrievedBook;
-        }, 
-        function handleError(err){
-          componentScope.errorMessage = `No book with id #${this.bookID} could be retrieved!`;
-          componentScope.router.navigate(["/books"]);
-        }
-      );
+    this.bookService.getBook(this.bookID, this.setBook.bind(this), this.bookRetrievalError.bind(this));
+  }
+
+  setBook(retrievedBook: Book){
+    this.book = retrievedBook;
+  }
+
+  bookRetrievalError(){
+    this.errorMessage = `No book with id #${this.bookID} could be retrieved!`;
+    this.router.navigate(["/books"]);
   }
 
   deleteBook(){
@@ -55,7 +53,6 @@ export class SingleBookComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(){
-    this.bookSubscription.unsubscribe();
     this.idSubscription.unsubscribe();
     if(this.deleteSubscription){
       this.deleteSubscription.unsubscribe();
