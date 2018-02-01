@@ -48,7 +48,6 @@ export class SingleBookComponent implements OnInit, OnDestroy {
     this.errorMessage = "Could not delete this book!";
   }
 
-
   goEdit(){
     this.router.navigate([`/books/${this.bookID}/edit`]);
   }

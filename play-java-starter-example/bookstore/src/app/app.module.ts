@@ -22,6 +22,7 @@ import { EditBookComponent } from './edit-book/edit-book.component';
 import { BookComponent } from './book/book.component';
 import { BookService } from './shared/services/book.service';
 import { SingleBookComponent } from './single-book/single-book.component';
+import { StatusBarComponent } from './status-bar/status-bar.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { SingleBookComponent } from './single-book/single-book.component';
     NewBookComponent,
     EditBookComponent,
     BookComponent,
-    SingleBookComponent
+    SingleBookComponent,
+    StatusBarComponent
   ],
   imports: [
     BrowserModule,

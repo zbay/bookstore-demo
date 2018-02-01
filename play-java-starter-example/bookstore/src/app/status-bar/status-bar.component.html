@@ -1,0 +1,8 @@
+<div [ngStyle]="{'background-color': status.display === 'success' ? 'green' : 'red' }"
+   *ngIf="status.display === 'success' || status.display === 'error'" 
+   id="statusBox">
+  <p>{{ status.message }}</p>
+  <button mat-raised-button (click)="close()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
