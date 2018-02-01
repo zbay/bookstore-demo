@@ -54,7 +54,14 @@ public class BooksController extends Controller {
     }
 
     public Result createBook(){
-        JsonNode bookObj = request().body().asJson();
+        Form<Book> bookForm = formFactory.form(Book.class).bindFromRequest();
+        if(bookForm.hasErrors()){
+            System.out.println("Bad book!");
+            return badRequest();
+        }
+        Book book = bookForm.get();
+        book.save();
+        /*JsonNode bookObj = request().body().asJson();
         Book existingBook = Book.find.byId(bookObj.findPath("id").intValue());
         if(existingBook != null){
             return internalServerError();
@@ -64,7 +71,8 @@ public class BooksController extends Controller {
         newBook.setTitle(bookObj.findPath("title").textValue());
         newBook.setAuthor(bookObj.findPath("author").textValue());
         newBook.setPrice(Integer.parseInt(bookObj.findPath("price").textValue()));
-        newBook.save();
+        newBook.save();*/
+
         return ok();
     }
 
@@ -104,15 +112,24 @@ public class BooksController extends Controller {
     }
 
     public Result updateBook(Integer id){
-        JsonNode book = request().body().asJson();
+        Form<Book> bookForm = formFactory.form(Book.class).bindFromRequest();
+        if(bookForm.hasErrors()){
+            return badRequest();
+        }
+        Book book = bookForm.get();
+        //JsonNode book = request().body().asJson();
         Book oldBook = Book.find.byId(id);
         if(oldBook == null) {
             return notFound();
         }
 
-        oldBook.setTitle(book.findPath("title").textValue());
+        /*oldBook.setTitle(book.findPath("title").textValue());
         oldBook.setAuthor(book.findPath("author").textValue());
         oldBook.setPrice(Integer.parseInt(book.findPath("price").textValue()));
+        oldBook.save();*/
+        oldBook.setTitle(book.title);
+        oldBook.setAuthor(book.author);
+        oldBook.setPrice(book.price);
         oldBook.save();
 
         return ok();
